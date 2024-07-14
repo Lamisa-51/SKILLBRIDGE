@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import Cards from "./Cards"; // Import the Cards component
+import Cards from "./Cards"; 
+import Login from "./Login";
+
+
 
 function Navbar() {
     const [sticky, setSticky] = useState(false);
@@ -9,7 +12,7 @@ function Navbar() {
     const searchBoxRef = useRef(null);
 
     useEffect(() => {
-        fetch('../../public/list.json') // Update the path to the correct one
+        fetch('http://localhost:4005/course') 
             .then(response => response.json())
             .then(data => setList(data));
     }, []);
@@ -121,7 +124,9 @@ function Navbar() {
                         </div>
                         <a className="text-2xl font-bold cursor-pointer">SkillBridge</a>
                         <div className="lg:hidden">
-                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer ml-4">Login</a>
+                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer ml-4"  onClick={() =>
+                    document.getElementById("my_modal_3").showModal()
+                  }>Login</a>
                         </div>
                     </div>
                     <div className="navbar-end space-x-3">
@@ -153,7 +158,10 @@ function Navbar() {
                             </svg>
                         </label>
                         <div className="hidden lg:block">
-                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer">Login</a>
+                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer"  onClick={() =>
+                    document.getElementById("my_modal_3").showModal()
+                  }>Login</a>
+                  <Login/>
                         </div>
                     </div>
                 </div>
