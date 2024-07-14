@@ -25,6 +25,7 @@ try {
 
 app.use("/course",courseRoute)
 app.use("/user",userRoute)
+app.get("/", (req, res) => res.send("API Working!"))
 
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`)
