@@ -14,7 +14,7 @@ function Navbar() {
     const searchBoxRef = useRef(null);
 
     useEffect(() => {
-        fetch('http://localhost:4005/course') 
+        fetch(`${process.env.REACT_APP_API_URL}/course`) 
             .then(response => response.json())
             .then(data => setList(data));
     }, []);

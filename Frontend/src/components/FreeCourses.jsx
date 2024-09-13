@@ -12,7 +12,7 @@ function FreeCourses() {
   useEffect(() => {
     const getCourse = async () => {
       try {
-        const res = await axios.get("http://localhost:4005/course ");
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/course`);
         
         const data=res.data.filter((data)=>data.catagory==="Free");
         console.log(data);
