@@ -1,51 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthProvider";
+
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [_, setAuthUser] = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const onSubmit = async (data) => {
     const userInfo = {
       email: data.email,
       password: data.password,
     };
-    await axios
-      .post("http://localhost:4005/user/login", userInfo)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          toast.success("Loggedin Successfully");
-        }
-      })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err);
-          toast.error("Error: " + err.response.data.message);
-        }
-      });
+    try {
+      const res = await axios.post("http://localhost:4005/user/login", userInfo);
+      if (res.data) {
+        toast.success("Logged in Successfully");
+        document.getElementById("my_modal_3").close();
+        localStorage.setItem("Users", JSON.stringify(res.data.user));
+        setAuthUser(res.data.user); 
+        navigate(from, { replace: true });
+      }
+    } catch (err) {
+      if (err.response) {
+        toast.error("Error: " + err.response.data.message);
+      }
+    }
   };
+
   return (
     <div>
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
           <form onSubmit={handleSubmit(onSubmit)} method="dialog">
-            {/* if there is a button in form, it will close the modal */}
             <Link
               to="/"
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={() => document.getElementById("my_modal_3").close()}
             >
-              ✕
+              
             </Link>
-
             <h3 className="font-bold text-lg">Login</h3>
-            {/* Email */}
             <div className="mt-4 space-y-2">
               <span>Email</span>
               <br />
@@ -62,7 +62,6 @@ function Login() {
                 </span>
               )}
             </div>
-            {/* password */}
             <div className="mt-4 space-y-2">
               <span>Password</span>
               <br />
@@ -79,20 +78,15 @@ function Login() {
                 </span>
               )}
             </div>
-
-            {/* Button */}
             <div className="flex justify-around mt-6">
               <button className="bg-pink-500 text-white rounded-md px-3 py-1 hover:bg-pink-700 duration-200">
                 Login
               </button>
               <p>
                 Not registered?{" "}
-                <Link
-                  to="/signup"
-                  className="underline text-blue-500 cursor-pointer"
-                >
+                <Link to="/signup" className="underline text-blue-500 cursor-pointer">
                   Signup
-                </Link>{" "}
+                </Link>
               </p>
             </div>
           </form>
@@ -103,3 +97,8 @@ function Login() {
 }
 
 export default Login;
+
+
+
+
+

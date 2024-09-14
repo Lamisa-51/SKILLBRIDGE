@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import Cards from "./Cards"; 
 import Login from "./Login";
-
-
+import Logout from "./Logout";
+import { useAuth } from "../context/AuthProvider";
 
 function Navbar() {
+    const [authUser, setAuthUser] = useAuth();
+
     const [sticky, setSticky] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -124,9 +126,16 @@ function Navbar() {
                         </div>
                         <a className="text-2xl font-bold cursor-pointer">SkillBridge</a>
                         <div className="lg:hidden">
-                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer ml-4"  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
-                  }>Login</a>
+                            {!authUser ? (
+                                <a 
+                                    className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer ml-4" 
+                                    onClick={() => document.getElementById("my_modal_3").showModal()}
+                                >
+                                    Login
+                                </a>
+                            ) : (
+                                <Logout />
+                            )}
                         </div>
                     </div>
                     <div className="navbar-end space-x-3">
@@ -157,12 +166,20 @@ function Navbar() {
                                                 clipRule="evenodd" />
                             </svg>
                         </label>
-                        <div className="hidden lg:block">
-                            <a className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer"  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
-                  }>Login</a>
-                  <Login/>
-                        </div>
+
+                        {authUser ? (
+                            <Logout /> // Show Logout if the user is authenticated
+                        ) : (
+                            <div className="hidden lg:block">
+                                <a 
+                                    className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer" 
+                                    onClick={() => document.getElementById("my_modal_3").showModal()}
+                                >
+                                    Login
+                                </a>
+                                <Login />
+                            </div>
+                        )}
                     </div>
                 </div>
                 {isDropdownVisible && searchTerm && (
@@ -190,3 +207,7 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
+
+
