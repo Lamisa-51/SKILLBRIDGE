@@ -7,9 +7,9 @@ import userRoute from "./route/user.route.js"
 const app = express();
 app.use(cors(
     (
-        origin:("skillbridge-api.vercel.app"),
-        methods:("POST","GET"),
-        credentials:true
+        origin:["skillbridge-ui.vercel.app"];
+        methods:["POST","GET"];
+        credentials: true
     )
 
 ));
