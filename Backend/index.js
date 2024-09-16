@@ -5,14 +5,7 @@ import cors from "cors";
 import courseRoute from "./route/course.route.js"
 import userRoute from "./route/user.route.js"
 const app = express();
-app.use(cors(
-    (
-        origin:["skillbridge-ui.vercel.app"];
-        methods:["POST","GET"];
-        credentials: true
-    )
-
-));
+app.use(cors( ));
 app.use(express.json())
 
 dotenv.config();
@@ -26,8 +19,6 @@ try {
 } catch (error) {
     console.log("Error: ", error);
 }
-
-
 
 
 app.use("/course",courseRoute)
