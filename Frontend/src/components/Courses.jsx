@@ -6,6 +6,7 @@ function Courses() {
   const [course,setCourse] = useState([]);
  const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4005";
   useEffect(() => {
+    console.log("API Base URL:", API_BASE_URL);
     const getCourse = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/course`);
