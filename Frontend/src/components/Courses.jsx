@@ -4,10 +4,11 @@ import axios from "axios";
 
 function Courses() {
   const [course,setCourse] = useState([]);
+  const API_BASE_URL = "http://localhost:4005/course" || "https:skillbridge-api.vercel.app";
   useEffect(() => {
     const getCourse = async () => {
       try {
-        const res = await axios.get("https://skillbridge-api.vercel.app/course");
+        const res = await axios.get(`${API_BASE_URL}/course`);
         console.log(res.data);
         setCourse(res.data);
       } catch (error) {
