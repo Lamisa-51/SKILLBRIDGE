@@ -5,19 +5,27 @@ import axios from "axios";
 function Courses() {
   const [course,setCourse] = useState([]);
 const API_BASE_URL = process.env.REACT_APP_API_URL || "https://skillbridge-api.vercel.app";
+  
   useEffect(() => {
+    
     console.log("API Base URL:", API_BASE_URL);
-    const getCourse = async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/course`);
-        console.log(res.data);
+  const getCourse = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/course`);
+      
+      if (res.headers['content-type'].includes('application/json')) {
         setCourse(res.data);
-      } catch (error) {
-        console.log(error);
+      } else {
+        console.error("Response is not JSON:", res);
       }
-    };
-    getCourse();
-  }, []);
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
+  
+  getCourse();
+}, [API_BASE_URL]);
+
 
   return (
     <>
