@@ -19,7 +19,7 @@ function Login() {
       password: data.password,
     };
     try {
-      const res = await axios.post("http://skillbridge-api.vercel.app/user/login", userInfo);
+      const res = await axios.post("https://skillbridge-api.vercel.app/user/login", userInfo);
       if (res.data) {
         toast.success("Logged in Successfully");
         document.getElementById("my_modal_3").close();
