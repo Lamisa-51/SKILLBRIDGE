@@ -16,7 +16,7 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || "https://skillbridge-api.v
           console.error("API_BASE_URL is not defined");
           return;
         }
-    try {
+    
       const res = await axios.get(`${API_BASE_URL}/course`);
       
       if (res.headers['content-type'].includes('application/json')) {
