@@ -1,4 +1,5 @@
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Home/Home";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Course from "./Course/Course";
@@ -10,15 +11,32 @@ import { useAuth } from "./context/AuthProvider";
 function App() {
   const [authUser,setAuthUser] = useAuth();
   console.log(authUser);
-
+  const router = createBrowserRouter([
+    {
+      path: "/*",
+      element: <Home />
+    },
+    {
+      path: "/course",
+      element: authUser? <Course />:< Navigate to ="/Signup"/>
+    },
+    {
+      path: "/signup",
+      element:<Signup />
+    },
+  ]);
+  
   return (
     <>
       <div className="dark:bg-slate-900 dark:text-white">
-        <Routes>
+     
+      <RouterProvider router={router} />
+        {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/course" element={authUser? <Course />:< Navigate to ="/Signup"/>}/>
           <Route path="/signup" element={<Signup />} />
-        </Routes>
+        </Routes> */}
+         
         <Toaster />
       </div>
     </>
@@ -26,30 +44,3 @@ function App() {
 }
 
 export default App;
-
-
-
-/*import React from "react";
-import Home from "./Home/Home";
-import Course from "./Course/Course";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import {Route,Routes} from 'react-router-dom';
-
-
-function App() {
-
-  return (
-    <>
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/course" element={<Course/>}/>
-      <Route path="/signup" element={<Signup/>}/>
-      <Route path="/login" element={<Login />} /> 
-    </Routes>
-    
-    </>
-  );
-}
-
-export default App*/
