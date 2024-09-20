@@ -8,8 +8,14 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || "https://skillbridge-api.v
   
   useEffect(() => {
     
-    console.log("API Base URL:", API_BASE_URL);
   const getCourse = async () => {
+      try {
+        console.log("API Base URL:", API_BASE_URL);
+        
+        if (!API_BASE_URL) {
+          console.error("API_BASE_URL is not defined");
+          return;
+        }
     try {
       const res = await axios.get(`${API_BASE_URL}/course`);
       
@@ -19,7 +25,7 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || "https://skillbridge-api.v
         console.error("Response is not JSON:", res);
       }
     } catch (error) {
-      console.error("API Error:", error);
+     console.error("API Error:", error.response ? error.response.data : error.message);
     }
   };
   
