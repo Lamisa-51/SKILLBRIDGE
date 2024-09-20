@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Courses() {
   const [course,setCourse] = useState([]);
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://skillbridge-api.vercel.app";
+const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || "https://skillbridge-api.vercel.app";
   
   useEffect(() => {
     
